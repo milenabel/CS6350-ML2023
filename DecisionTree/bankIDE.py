@@ -17,12 +17,34 @@ test_data = pd.read_csv(test_data_path, header=None, sep=",")
 attributes = train_data.columns[:-1].tolist()
 label = train_data.columns[-1]
 
-# Define the threshold for converting numerical attributes to binary
-threshold = train_data[5].median()  # Using the median of the 'balance' attribute as an example
+# Function to handle missing values by completing with majority value
+def handle_missing_values(data, attributes):
+    for attr in attributes:
+        majority_value = data[attr].mode()[0]  # Find the majority value
+        data[attr] = data[attr].replace('unknown', majority_value)  # Replace 'unknown' with majority value
+    return data
 
-# Convert numerical attributes to binary based on the threshold
-train_data[5] = train_data[5] > threshold
-test_data[5] = test_data[5] > threshold
+# Handle missing values in both training and test data
+train_data = handle_missing_values(train_data, attributes)
+test_data = handle_missing_values(test_data, attributes)
+
+# train_data.head()
+# test_data.head()
+
+# Function to convert numerical attributes to binary based on median
+def convert_numerical_to_binary(data, threshold_indices):
+    for idx in threshold_indices:
+        if data[idx].dtype == 'float64' or data[idx].dtype == 'int64':
+            median_threshold = data[idx].median()
+            data[idx] = data[idx] > median_threshold
+    return data
+
+# Identify numerical attributes by their indices
+numerical_indices = [0, 5, 9, 10, 11, 12, 13, 14]
+
+# Convert numerical attributes to binary based on the medians
+train_data = convert_numerical_to_binary(train_data, numerical_indices)
+test_data = convert_numerical_to_binary(test_data, numerical_indices)
 
 # train_data.head()
 # test_data.head()
@@ -138,16 +160,14 @@ def predict(tree, instance):
     subtree = tree[root_attribute][root_value]
     return predict(subtree, instance)
 
-
 # Define the list of heuristics to use
 heuristics = ['information_gain', 'majority_error', 'gini_index']
 
-# Create lists to store errors for each combination of heuristic and depth
-train_errors = []
-test_errors = []
-
 for heuristic in heuristics:
-    for max_depth in range(1, 7):
+    for max_depth in range(1, 17):  # Vary maximum tree depth from 1 to 16
+        if max_depth > len(attributes):
+            continue  # Skip if max depth exceeds the number of attributes
+            
         # Train decision tree using ID3 algorithm
         decision_tree = id3_algorithm(train_data, attributes, label, max_depth, heuristic)
         
@@ -159,16 +179,8 @@ for heuristic in heuristics:
         test_predictions = [predict(decision_tree, instance) for _, instance in test_data.iterrows()]
         test_error = sum(test_predictions != test_data[label]) / len(test_data)
         
-        # Append errors to the respective lists
-        train_errors.append((max_depth, heuristic, train_error))
-        test_errors.append((max_depth, heuristic, test_error))
-
-# Now, you can calculate and print average errors for each heuristic and depth combination
-for heuristic in heuristics:
-    print(f"Heuristic: {heuristic}")
-    for max_depth in range(1, 7):
-        # Calculate average train and test errors
-        avg_train_error = sum(train_error for d, h, train_error in train_errors if h == heuristic and d == max_depth) / len([train_error for d, h, train_error in train_errors if h == heuristic and d == max_depth])
-        avg_test_error = sum(test_error for d, h, test_error in test_errors if h == heuristic and d == max_depth) / len([test_error for d, h, test_error in test_errors if h == heuristic and d == max_depth])
-
-        print(f"Max Depth: {max_depth}, Avg Train Error: {avg_train_error:.4f}, Avg Test Error: {avg_test_error:.4f}")
+        # Print results for each combination of depth and heuristic
+        print(f"Heuristic: {heuristic}, Max Depth: {max_depth}")
+        print(f"Train Error: {train_error:.4f}")
+        print(f"Test Error: {test_error:.4f}")
+        print()  # Add a new line between results

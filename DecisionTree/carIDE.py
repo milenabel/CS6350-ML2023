@@ -156,7 +156,7 @@ for heuristic in heuristics:
         train_errors.append((max_depth, heuristic, train_error))
         test_errors.append((max_depth, heuristic, test_error))
 
-# Now, you can calculate and print average errors for each heuristic and depth combination
+# Calculate and print average errors for each heuristic and depth combination
 for heuristic in heuristics:
     print(f"Heuristic: {heuristic}")
     for max_depth in range(1, 7):

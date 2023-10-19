@@ -1,6 +1,7 @@
 import numpy as np
 from collections import Counter
 import pandas as pd
+from sklearn.metrics import accuracy_score
 
 # Dataset folder storing required data files
 dataset_folder = "bank"  # Update to the "bank" dataset folder
@@ -18,15 +19,15 @@ attributes = train_data.columns[:-1].tolist()
 label = train_data.columns[-1]
 
 # Function to handle missing values by completing with majority value
-def handle_missing_values(data, attributes):
-    for attr in attributes:
-        majority_value = data[attr].mode()[0]  # Find the majority value
-        data[attr] = data[attr].replace('unknown', majority_value)  # Replace 'unknown' with majority value
-    return data
+# def handle_missing_values(data, attributes):
+#     for attr in attributes:
+#         majority_value = data[attr].mode()[0]  # Find the majority value
+#         data[attr] = data[attr].replace('unknown', majority_value)  # Replace 'unknown' with majority value
+#     return data
 
-# Handle missing values in both training and test data
-train_data = handle_missing_values(train_data, attributes)
-test_data = handle_missing_values(test_data, attributes)
+# # Handle missing values in both training and test data
+# train_data = handle_missing_values(train_data, attributes)
+# test_data = handle_missing_values(test_data, attributes)
 
 # train_data.head()
 # test_data.head()

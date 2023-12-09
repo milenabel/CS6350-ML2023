@@ -24,6 +24,34 @@ Training and test datasets (train.csv and test.csv) are loaded to demonstrate th
 ## Outputs
 The script primarily outputs the training process details, including forward pass outputs, gradients during backpropagation, and the error after training.
 
+## bonus1.py
+
+## Overview
+'bonus1.py' is a Python script that implements a customizable deep neural network using PyTorch. The script allows for experimentation with different network depths, widths, and activation functions. It includes data preprocessing, model training, and evaluation phases, making it a comprehensive tool for exploring the impact of neural network architecture on binary classification tasks.
+
+## Prerequisites
+- Python 3
+- PyTorch
+- pandas (for data loading)
+- scikit-learn (for data scaling)
+- torch.utils.data (for data loading and batching)
+
+## Running the Script
+Run the script with the following command:
+./run.sh
+
+## Inputs
+Training and test datasets (train.csv and test.csv) for binary classification.
+
+## Functionality
+- Model Customization: Allows for varying the depth and width of the neural network, as well as choosing between different activation functions (Tanh or ReLU).
+- Weight Initialization: Adopts Xavier or He initialization based on the chosen activation function.
+- Error Calculation: Computes training and test errors to evaluate model performance.
+- Experimentation with Architecture: Facilitates experimentation with different network architectures to study their impact on model accuracy.
+
+## Outputs
+The script outputs training and test errors for each combination of network depth, width, and activation function, providing insights into how these parameters influence model performance.
+
 ## bonus2.py
 
 ## Overview
@@ -42,15 +70,14 @@ Run the script with the following command:
 ## Inputs
 Training and test datasets (train.csv and test.csv) for logistic regression.
 
-Functionality
-Training and Testing: Trains the logistic regression model using the training set and evaluates it on the test set.
-Error Calculation: Computes training and test errors for model evaluation.
-Hyperparameter Tuning: Includes tuning of learning rate, decay parameter, and variance values.
-Outputs
+## Functionality
+- Training and Testing: Trains the logistic regression model using the training set and evaluates it on the test set.
+- Error Calculation: Computes training and test errors for model evaluation.
+- Hyperparameter Tuning: Includes tuning of learning rate, decay parameter, and variance values.
+
+## Outputs
 Outputs include training and test errors for different settings of variance in MAP estimation and for the ML estimation.
 Provides insights into the influence of variance on the logistic regression model's performance.
-Usage
-The script is particularly useful for understanding the differences in logistic regression's performance under MAP estimation with various variance settings compared to standard ML estimation.
 
 
 

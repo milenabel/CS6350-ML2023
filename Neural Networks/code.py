@@ -78,7 +78,7 @@ class NeuralNetwork:
         # Calculate the error (loss) of the prediction
         return 0.5 * sum((y - self.y_hat) ** 2)
 
-# Let's load a single training example from the training data and then implement back-propagation for it
+# Load a single training example from the training data and then implement back-propagation for it
 train_data = pd.read_csv('data/train.csv', header=None)
 test_data = pd.read_csv('data/test.csv', header=None)
 
@@ -153,9 +153,7 @@ def train_neural_network(nn, X_train, y_train, X_test, y_test, hidden_sizes, gam
             test_error = np.mean([nn.calculate_error(y) for y in nn.forward(X_test)])
             train_errors.append(train_error)
             test_errors.append(test_error)
-            
-            # Optional: Implement early stopping or other convergence criteria
-            
+                        
         # Print the training and test errors for each hidden layer size
         print(f"Hidden layer size: {hidden_size}")
         print(f"Training error: {train_errors[-1]}")
@@ -384,9 +382,7 @@ def train_neural_network(nn, X_train, y_train, X_test, y_test, hidden_sizes, gam
             test_error = np.mean([nn.calculate_error(y) for y in nn.forward(X_test)])
             train_errors.append(train_error)
             test_errors.append(test_error)
-            
-            # Optional: Implement early stopping or other convergence criteria
-            
+                        
         # Print the training and test errors for each hidden layer size
         print(f"Hidden layer size: {hidden_size}")
         print(f"Training error: {train_errors[-1]}")

@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 import numpy as np
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import cross_val_score
 
 # Create file paths
 train_path =  f"data/train_final.csv"
@@ -117,8 +118,6 @@ xgb_grid_search.fit(X_train_full, y)
 # Print the best parameters and the corresponding AUC score
 print("Best parameters for XGBoost: ", xgb_grid_search.best_params_)
 print("Best AUC score for XGBoost: ", xgb_grid_search.best_score_)
-
-from sklearn.model_selection import cross_val_score
 
 # Update the models with the best parameters found by GridSearchCV
 rf_model_best = RandomForestClassifier(**rf_grid_search.best_params_, random_state=0)
